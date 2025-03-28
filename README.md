@@ -95,6 +95,14 @@ src/
 └── lib/             # Library code and utilities
 ```
 
+## 🚀 Deployment
+
+The project includes a custom deployment script (`deploy.js`) for automated deployments. To deploy:
+
+```bash
+npm run deploy
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
