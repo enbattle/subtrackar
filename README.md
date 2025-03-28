@@ -2,6 +2,8 @@
 
 A modern subscription management and analytics platform built with Next.js and TypeScript.
 
+Live site here: [https://enbattle.github.io/subtrackar/](https://enbattle.github.io/subtrackar/)
+
 ## Features
 
 - 📊 Dashboard with analytics and insights
