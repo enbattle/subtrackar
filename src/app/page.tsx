@@ -1,3 +1,10 @@
+/**
+ * Home Page Component
+ *
+ * This is the main landing page of the application.
+ * It showcases the key features, pricing, and testimonials of the subscription management platform.
+ */
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,16 +25,32 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 
+/**
+ * Home Component
+ *
+ * Renders the landing page with:
+ * - Navigation header
+ * - Hero section
+ * - Features showcase
+ * - Pricing information
+ * - Testimonials
+ *
+ * @returns {JSX.Element} The home page component
+ */
 export default function Home() {
   return (
+    // Main container with dark theme
     <div className="min-h-screen bg-black text-white">
+      {/* Sticky header with navigation */}
       <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
+            {/* Logo and brand name */}
             <div className="flex items-center gap-2">
               <CreditCard className="h-6 w-6" />
               <span className="text-xl font-bold">Subtrackar</span>
             </div>
+            {/* Main navigation links */}
             <nav className="hidden md:flex gap-6">
               <Link
                 href="#features"

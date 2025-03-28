@@ -1,3 +1,11 @@
+/**
+ * Calendar Page Component
+ *
+ * A client-side component that displays a calendar view of subscription
+ * renewals, payments, and expirations. Includes interactive calendar navigation
+ * and detailed event information through dropdowns.
+ */
+
 "use client";
 
 import { useState } from "react";
@@ -32,6 +40,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+/**
+ * CalendarPage Component
+ *
+ * Renders an interactive calendar with:
+ * - Month navigation
+ * - Event display
+ * - Event type indicators
+ * - Loading states
+ * - Event details in dropdowns
+ *
+ * @returns {JSX.Element} The calendar page component
+ */
 export default function CalendarPage() {
   // Initialize with the current month and year
   const [currentDate, setCurrentDate] = useState(() => {
@@ -39,7 +59,7 @@ export default function CalendarPage() {
     return { month: now.getMonth(), year: now.getFullYear() };
   });
 
-  // Remove isLoadingEvents since it's not being used
+  // Fetch calendar events with React Query
   const { data: events } = useQuery({
     queryKey: ["calendar-events"],
     queryFn: async () => {
@@ -48,6 +68,7 @@ export default function CalendarPage() {
     },
   });
 
+  // Fetch month data with React Query
   const { data: monthData, isLoading: isLoadingMonth } = useQuery({
     queryKey: ["calendar-month", currentDate.month, currentDate.year],
     queryFn: async () => {
@@ -56,6 +77,10 @@ export default function CalendarPage() {
     },
   });
 
+  /**
+   * Navigate to the previous month
+   * Handles year transition when going from January to December
+   */
   const handlePreviousMonth = () => {
     setCurrentDate((prev) => {
       if (prev.month === 0) {
@@ -65,6 +90,10 @@ export default function CalendarPage() {
     });
   };
 
+  /**
+   * Navigate to the next month
+   * Handles year transition when going from December to January
+   */
   const handleNextMonth = () => {
     setCurrentDate((prev) => {
       if (prev.month === 11) {
@@ -74,6 +103,7 @@ export default function CalendarPage() {
     });
   };
 
+  // Array of month names for display
   const monthNames = [
     "January",
     "February",
@@ -89,7 +119,12 @@ export default function CalendarPage() {
     "December",
   ];
 
-  // Add helper function to get event type styles
+  /**
+   * Get styles for different event types
+   *
+   * @param {string} type - The type of event (renewal, payment, expiration)
+   * @returns {string} CSS classes for the event type
+   */
   const getEventTypeStyles = (type: string) => {
     switch (type) {
       case "renewal":
@@ -103,12 +138,23 @@ export default function CalendarPage() {
     }
   };
 
-  // Add helper function to format amount for display
+  /**
+   * Format amount for display
+   * Ensures amount has a dollar sign
+   *
+   * @param {string} amount - The amount to format
+   * @returns {string} Formatted amount with dollar sign
+   */
   const formatAmount = (amount: string) => {
     return amount.startsWith("$") ? amount : `$${amount}`;
   };
 
-  // Add helper function to get event type icon
+  /**
+   * Get icon for different event types
+   *
+   * @param {string} type - The type of event
+   * @returns {JSX.Element} The appropriate icon component
+   */
   const getEventTypeIcon = (type: string) => {
     switch (type) {
       case "renewal":
@@ -124,6 +170,7 @@ export default function CalendarPage() {
 
   return (
     <div className="flex flex-col gap-6 p-4 md:gap-8 md:p-8">
+      {/* Page header with title and month navigation */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
@@ -133,6 +180,7 @@ export default function CalendarPage() {
             Track upcoming subscription renewals
           </p>
         </div>
+        {/* Month navigation controls */}
         <div className="flex items-center gap-2">
           <Button variant="outline" size="icon" onClick={handlePreviousMonth}>
             <ChevronLeft className="h-4 w-4" />
@@ -163,6 +211,7 @@ export default function CalendarPage() {
         </div>
       </div>
 
+      {/* Calendar card */}
       <Card>
         <CardHeader>
           <CardTitle>
@@ -171,6 +220,7 @@ export default function CalendarPage() {
           <CardDescription>Subscription renewal calendar</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Calendar header with day names */}
           <div className="grid grid-cols-7 gap-1 text-center font-medium">
             <div className="p-2">Sun</div>
             <div className="p-2">Mon</div>
@@ -181,7 +231,9 @@ export default function CalendarPage() {
             <div className="p-2">Sat</div>
           </div>
 
+          {/* Calendar grid */}
           {isLoadingMonth ? (
+            // Loading skeleton for calendar days
             <div className="grid grid-cols-7 gap-1">
               {Array.from({ length: 35 }).map((_, i) => (
                 <div key={i} className="min-h-[100px] rounded-lg border p-2">
@@ -203,7 +255,7 @@ export default function CalendarPage() {
                 <div key={`empty-${i}`} className="p-0"></div>
               ))}
 
-              {/* Calendar days */}
+              {/* Calendar days with events */}
               {monthData?.days.map(({ day, events }) => (
                 <div
                   key={day}
@@ -221,6 +273,7 @@ export default function CalendarPage() {
                               event.type
                             )}`}
                           >
+                            {/* Event logo */}
                             <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-background">
                               <Image
                                 src={event.logo || "/placeholder.svg"}
@@ -230,6 +283,7 @@ export default function CalendarPage() {
                                 className="h-3 w-3"
                               />
                             </div>
+                            {/* Event details */}
                             <div className="flex min-w-0 flex-1 items-center justify-between gap-1">
                               <span className="truncate">{event.name}</span>
                               <span className="flex shrink-0 items-center gap-1">
@@ -241,6 +295,7 @@ export default function CalendarPage() {
                             </div>
                           </button>
                         </DropdownMenuTrigger>
+                        {/* Event details dropdown */}
                         <DropdownMenuContent
                           align="start"
                           className="w-[200px]"

@@ -1,3 +1,11 @@
+/**
+ * Dashboard Page Component
+ *
+ * A client-side component that displays the main dashboard overview.
+ * Shows key metrics, charts, and subscription information using React Query
+ * for data fetching and Recharts for data visualization.
+ */
+
 "use client";
 
 import Image from "next/image";
@@ -39,10 +47,23 @@ import {
   Cell,
 } from "recharts";
 
-// Add color constants
+// Color palette for charts and visualizations
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
+/**
+ * DashboardPage Component
+ *
+ * Renders the main dashboard with:
+ * - Key metrics and statistics
+ * - Monthly spending chart
+ * - Upcoming renewals list
+ * - Category distribution chart
+ * - Loading states with skeletons
+ *
+ * @returns {JSX.Element} The dashboard page component
+ */
 export default function DashboardPage() {
+  // Fetch dashboard statistics with loading state
   const { data: stats, isLoading: isLoadingStats } = useQuery({
     queryKey: ["dashboardStats"],
     queryFn: async () => {
@@ -51,6 +72,7 @@ export default function DashboardPage() {
     },
   });
 
+  // Fetch upcoming renewals with loading state
   const { data: renewals, isLoading: isLoadingRenewals } = useQuery({
     queryKey: ["upcomingRenewals"],
     queryFn: async () => {
@@ -59,6 +81,7 @@ export default function DashboardPage() {
     },
   });
 
+  // Fetch top subscriptions with loading state
   const { data: topSubs, isLoading: isLoadingTop } = useQuery({
     queryKey: ["topSubscriptions"],
     queryFn: async () => {
@@ -69,6 +92,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6 p-4 md:gap-8 md:p-8">
+      {/* Page header with title and add subscription button */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
@@ -82,9 +106,11 @@ export default function DashboardPage() {
         </Button>
       </div>
 
+      {/* Key metrics grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {isLoadingStats
-          ? Array(4)
+          ? // Loading skeleton for stats
+            Array(4)
               .fill(0)
               .map((_, i) => (
                 <Card key={i}>
@@ -98,7 +124,8 @@ export default function DashboardPage() {
                   </CardContent>
                 </Card>
               ))
-          : stats?.map((stat, index) => (
+          : // Stats cards with trend indicators
+            stats?.map((stat, index) => (
               <Card key={index}>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <CardTitle className="text-sm font-medium">
@@ -130,7 +157,9 @@ export default function DashboardPage() {
             ))}
       </div>
 
+      {/* Charts and renewals grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        {/* Monthly spending chart */}
         <Card className="lg:col-span-4">
           <CardHeader>
             <CardTitle>Subscription Spending</CardTitle>
@@ -172,6 +201,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
+        {/* Upcoming renewals list */}
         <Card className="lg:col-span-3">
           <CardHeader>
             <CardTitle>Upcoming Renewals</CardTitle>
@@ -182,7 +212,8 @@ export default function DashboardPage() {
           <CardContent>
             <div className="space-y-4">
               {isLoadingRenewals
-                ? Array(3)
+                ? // Loading skeleton for renewals
+                  Array(3)
                     .fill(0)
                     .map((_, i) => (
                       <div key={i} className="flex items-center gap-4">
@@ -197,7 +228,8 @@ export default function DashboardPage() {
                         </div>
                       </div>
                     ))
-                : renewals?.map((renewal, index) => (
+                : // Renewal items with subscription details
+                  renewals?.map((renewal, index) => (
                     <div key={index} className="flex items-center gap-4">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
                         <Image
@@ -237,6 +269,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
+      {/* Category distribution chart */}
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
@@ -249,15 +282,12 @@ export default function DashboardPage() {
                 <PieChart>
                   <Pie
                     data={categoryDistribution}
+                    dataKey="value"
+                    nameKey="name"
                     cx="50%"
                     cy="50%"
-                    labelLine={false}
                     outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="amount"
-                    label={({ name, percent }) =>
-                      `${name} ${(percent * 100).toFixed(0)}%`
-                    }
+                    label
                   >
                     {categoryDistribution.map((entry, index) => (
                       <Cell
@@ -278,76 +308,7 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Top Subscriptions by Cost</CardTitle>
-            <CardDescription>
-              Your most expensive monthly subscriptions
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {isLoadingTop
-                ? Array(5)
-                    .fill(0)
-                    .map((_, i) => (
-                      <div key={i} className="flex items-center gap-4">
-                        <Skeleton className="h-10 w-10 rounded-full" />
-                        <div className="flex-1 space-y-2">
-                          <Skeleton className="h-4 w-[140px]" />
-                          <Skeleton className="h-4 w-[100px]" />
-                        </div>
-                        <Skeleton className="h-4 w-16" />
-                      </div>
-                    ))
-                : topSubs?.map((subscription, index) => (
-                    <div key={index} className="flex items-center gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-                        <Image
-                          src={subscription.logo || "/placeholder.svg"}
-                          alt={subscription.name}
-                          width={24}
-                          height={24}
-                          className="h-6 w-6"
-                        />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          {subscription.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {subscription.category}
-                        </p>
-                      </div>
-                      <div className="font-medium">{subscription.amount}</div>
-                    </div>
-                  ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
-
-      <Card className="border-orange-200 bg-orange-50 dark:bg-transparent dark:border-orange-900">
-        <CardHeader className="flex flex-row items-center gap-2 pb-2">
-          <AlertCircle className="h-4 w-4 text-orange-500" />
-          <CardTitle className="text-sm font-medium text-orange-700 dark:text-orange-400">
-            Optimization Opportunities
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-orange-700 dark:text-orange-400">
-            We&apos;ve identified 3 subscriptions with potential savings of up
-            to $215/month.{" "}
-            <Button
-              variant="link"
-              className="h-auto p-0 text-orange-700 dark:text-orange-400"
-            >
-              View recommendations
-            </Button>
-          </p>
-        </CardContent>
-      </Card>
     </div>
   );
 }

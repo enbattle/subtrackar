@@ -1,3 +1,11 @@
+/**
+ * Analytics Page Component
+ *
+ * A client-side component that provides detailed analytics and insights
+ * about subscription spending and usage patterns. Includes various charts
+ * and metrics to help users understand their subscription costs.
+ */
+
 "use client";
 
 import {
@@ -38,11 +46,27 @@ import {
   subscriptionTrends,
 } from "@/shared/mock-data/analytics";
 
+// Color palette for charts and visualizations
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
+/**
+ * AnalyticsPage Component
+ *
+ * Renders the analytics dashboard with:
+ * - Key metrics and statistics
+ * - Time period selector
+ * - Download report functionality
+ * - Tabbed interface for different views:
+ *   - Spending over time
+ *   - Category breakdown
+ *   - Subscription trends
+ *
+ * @returns {JSX.Element} The analytics page component
+ */
 export default function AnalyticsPage() {
   return (
     <div className="flex flex-col gap-6 p-4 md:gap-8 md:p-8">
+      {/* Page header with title and controls */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
@@ -50,6 +74,7 @@ export default function AnalyticsPage() {
             Analyze your subscription spending and usage
           </p>
         </div>
+        {/* Time period selector and download button */}
         <div className="flex items-center gap-2">
           <Select defaultValue="last30days">
             <SelectTrigger className="w-[180px]">
@@ -70,7 +95,9 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
+      {/* Key metrics grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {/* Total Monthly Spend card */}
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
@@ -86,6 +113,7 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
 
+        {/* Annual Projection card */}
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
@@ -101,6 +129,7 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
 
+        {/* Average Cost per Subscription card */}
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
@@ -116,6 +145,7 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
 
+        {/* Subscription Count card */}
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
@@ -132,6 +162,7 @@ export default function AnalyticsPage() {
         </Card>
       </div>
 
+      {/* Tabbed interface for different views */}
       <Tabs defaultValue="spending">
         <TabsList className="grid w-full grid-cols-3 md:w-[400px]">
           <TabsTrigger value="spending">Spending</TabsTrigger>
@@ -139,6 +170,7 @@ export default function AnalyticsPage() {
           <TabsTrigger value="trends">Trends</TabsTrigger>
         </TabsList>
 
+        {/* Spending over time chart */}
         <TabsContent value="spending" className="mt-4">
           <Card>
             <CardHeader>
@@ -161,12 +193,14 @@ export default function AnalyticsPage() {
                         border: "1px solid hsl(var(--border))",
                       }}
                     />
+                    {/* Actual spending line */}
                     <Area
                       type="monotone"
                       dataKey="amount"
                       stroke="orangered"
                       fill="yellow"
                     />
+                    {/* Projected spending line */}
                     <Area
                       type="monotone"
                       dataKey="projected"
@@ -181,8 +215,10 @@ export default function AnalyticsPage() {
           </Card>
         </TabsContent>
 
+        {/* Category breakdown charts */}
         <TabsContent value="categories" className="mt-4">
           <div className="grid gap-4 md:grid-cols-2">
+            {/* Spending by Category pie chart */}
             <Card>
               <CardHeader>
                 <CardTitle>Spending by Category</CardTitle>
@@ -226,6 +262,7 @@ export default function AnalyticsPage() {
               </CardContent>
             </Card>
 
+            {/* Top Categories bar chart */}
             <Card>
               <CardHeader>
                 <CardTitle>Top Categories</CardTitle>
@@ -235,6 +272,7 @@ export default function AnalyticsPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
+                  {/* Category progress bars */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium">Cloud Services</p>
