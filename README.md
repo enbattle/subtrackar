@@ -83,7 +83,7 @@ The application will be available at [http://localhost:3000](http://localhost:30
 - `npm run build` - Build the application
 - `npm run start` - Start the production server
 - `npm run lint` - Run ESLint
-- `npm run deploy` - Build and deploy the application
+- `npm run deploy` - Build and deploy the application (via Github pages)
 
 ### Project Structure
 
@@ -94,14 +94,6 @@ src/
 ├── shared/          # Shared utilities and types
 └── lib/             # Library code and utilities
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
