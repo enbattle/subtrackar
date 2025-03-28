@@ -111,3 +111,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Radix UI](https://www.radix-ui.com/) - Unstyled, accessible components
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [TanStack Query](https://tanstack.com/query/latest) - Data-fetching and state management
+
+## Disclaimer
+
+This is just a sample of a consumer-subscription platform project. Not all functionalities and implementations are included.
