@@ -1,48 +1,113 @@
-## Things to know
+# Subtrackar
 
-App is currently just a sample, so if you'd like to visit the different pages, please try the following paths:
+A modern subscription management and analytics platform built with Next.js and TypeScript.
 
-- /login
-- /signup
-- /dashboard
-- /dashboard/analytics
-- /dashboard/calendar
-- /dashboard/settings
-- /dashboard/subscriptions
+## Features
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+- 📊 Dashboard with analytics and insights
+- 📅 Calendar view for subscription management
+- ⚙️ User settings and preferences
+- 🔐 Secure authentication system
+- 🌓 Dark/Light mode support
+- 📱 Responsive design
+- 🔍 Subscription tracking and management
+
+## Tech Stack
+
+- **Framework**: Next.js 15.2.0
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **State Management**: TanStack Query
+- **Data Visualization**: Recharts
+- **Theme**: next-themes
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/subtrackar.git
+cd subtrackar
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env` file in the root directory and add your environment variables:
+
+```env
+# Add your environment variables here
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` - Home page
+- `/login` - Authentication page
+- `/signup` - User registration
+- `/dashboard` - Main dashboard
+  - `/dashboard/analytics` - Analytics view
+  - `/dashboard/calendar` - Calendar view
+  - `/dashboard/settings` - User settings
+  - `/dashboard/subscriptions` - Subscription management
 
-## Learn More
+## Development
 
-To learn more about Next.js, take a look at the following resources:
+### Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build the application
+- `npm run start` - Start the production server
+- `npm run lint` - Run ESLint
+- `npm run deploy` - Build and deploy the application
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/              # Next.js app router pages
+├── components/       # Reusable UI components
+├── shared/          # Shared utilities and types
+└── lib/             # Library code and utilities
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/) - The React framework
+- [Radix UI](https://www.radix-ui.com/) - Unstyled, accessible components
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [TanStack Query](https://tanstack.com/query/latest) - Data-fetching and state management
